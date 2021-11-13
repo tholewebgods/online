@@ -2344,7 +2344,7 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens,
         return;
     }
 
-    TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
+    Tile cachedTile = _tileCache->lookupTile(tile);
     if (cachedTile)
     {
         const std::string response = tile.serialize("tile:", ADD_DEBUG_RENDERID);
@@ -2396,7 +2396,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     {
         tile.setVersion(++_tileVersion);
 
-        TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
+        Tile cachedTile = _tileCache->lookupTile(tile);
         if(!cachedTile)
         {
             // Not cached, needs rendering.
@@ -2575,7 +2575,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             }
 
             // Satisfy as many tiles from the cache.
-            TileCache::Tile cachedTile = _tileCache->lookupTile(tile);
+            Tile cachedTile = _tileCache->lookupTile(tile);
             if (cachedTile)
             {
                 //TODO: Combine the response to reduce latency.
