@@ -547,14 +547,16 @@ namespace RenderTiles
                         data->reserve(pixmapWidth * pixmapHeight * 1);
 
 #ifdef ENABLE_DELTAS
-                        // Can we create a delta ? - FIXME: PngCache of this ? ...
+                        // FIXME: don't try to store & create deltas for read-only documents.
+
+                        // Can we create a delta ?
                         static DeltaGenerator deltaGen;
                         if (!deltaGen.createDelta(pixmap.data(), offsetX, offsetY,
                                                   pixelWidth, pixelHeight,
                                                   pixmapWidth, pixmapHeight,
                                                   tileRect.getLeft(), tileRect.getTop(),
                                                   tileCombined.getPart(),
-                                                  *data, wireId, oldWireId))
+                                                  *data, wireId, oldWireId, pngMutex))
 #endif
                         {
                             LOG_DBG("Encode a new png for tile #" << tileIndex);
