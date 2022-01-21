@@ -40,6 +40,7 @@ window.app = { // Shouldn't have any functions defined.
 		}
 	},
 	socket: null,
+	console: {},
 };
 
 (function (global) {
@@ -699,6 +700,13 @@ window.app = { // Shouldn't have any functions defined.
 	// If not debug, don't print anything on the console
 	// except in tile debug mode (Ctrl-Shift-Alt-d)
 	console.log2 = console.log;
+
+	// belt & braces in case of incomplete back-ports
+	var loggingMethods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd'];
+	for (var i = 0; i < loggingMethods.length; i++) {
+		window.app.console[loggingMethods[i]] = function() {};
+	}
+
 	if (global.loleafletLogging !== 'true') {
 		var methods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd'];
 		for (var i = 0; i < methods.length; i++) {
